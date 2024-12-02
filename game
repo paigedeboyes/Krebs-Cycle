@@ -1,0 +1,109 @@
+# Krebs Cycle Quiz
+def krebs_cycle_quiz():
+    # Data for the Krebs Cycle
+    krebs_stages = [
+        {
+            "step": "Step 1",
+            "reaction": "Oxaloacetate + Acetyl-CoA → Citrate",
+            "enzyme": "Citrate synthase",
+            "modulators": {
+                "positive": ["ADP"],
+                "negative": ["ATP", "NADH", "Citrate", "Succinyl-CoA"]
+            },
+            "ATP_equivalent": 0
+        },
+        {
+            "step": "Step 2",
+            "reaction": "Citrate → Isocitrate",
+            "enzyme": "Aconitase",
+            "modulators": {},
+            "ATP_equivalent": 0
+        },
+        {
+            "step": "Step 3",
+            "reaction": "Isocitrate → α-Ketoglutarate",
+            "enzyme": "Isocitrate dehydrogenase",
+            "modulators": {
+                "positive": ["ADP", "Ca²⁺"],
+                "negative": ["ATP", "NADH"]
+            },
+            "ATP_equivalent": 2.5  # from NADH
+        },
+        {
+            "step": "Step 4",
+            "reaction": "α-Ketoglutarate → Succinyl-CoA",
+            "enzyme": "α-Ketoglutarate dehydrogenase",
+            "modulators": {
+                "positive": ["Ca²⁺"],
+                "negative": ["NADH", "Succinyl-CoA"]
+            },
+            "ATP_equivalent": 2.5  # from NADH
+        },
+        {
+            "step": "Step 5",
+            "reaction": "Succinyl-CoA → Succinate",
+            "enzyme": "Succinyl-CoA synthetase",
+            "modulators": {},
+            "ATP_equivalent": 1  # as GTP
+        },
+        {
+            "step": "Step 6",
+            "reaction": "Succinate → Fumarate",
+            "enzyme": "Succinate dehydrogenase",
+            "modulators": {},
+            "ATP_equivalent": 1.5  # from FADH2
+        },
+        {
+            "step": "Step 7",
+            "reaction": "Fumarate → Malate",
+            "enzyme": "Fumarase",
+            "modulators": {},
+            "ATP_equivalent": 0
+        },
+        {
+            "step": "Step 8",
+            "reaction": "Malate → Oxaloacetate",
+            "enzyme": "Malate dehydrogenase",
+            "modulators": {
+                "negative": ["NADH"]
+            },
+            "ATP_equivalent": 2.5  # from NADH
+        }
+    ]
+
+    print("Welcome to the Krebs Cycle Quiz!")
+    print("Answer the following questions about each step in the cycle.")
+    score = 0
+
+    for stage in krebs_stages:
+        print("\n" + "="*50)
+        print(f"{stage['step']}: {stage['reaction']}")
+        answer = input("What is the enzyme for this step? ").strip()
+        if answer.lower() == stage['enzyme'].lower():
+            print("Correct!")
+            score += 1
+        else:
+            print(f"Incorrect. The correct enzyme is: {stage['enzyme']}")
+
+        if stage["modulators"]:
+            positive = input("Name one positive modulator (if any): ").strip()
+            if positive in stage['modulators'].get("positive", []):
+                print("Correct!")
+                score += 1
+            else:
+                print(f"Incorrect. Positive modulators include: {', '.join(stage['modulators'].get('positive', [])) or 'None'}")
+
+            negative = input("Name one negative modulator (if any): ").strip()
+            if negative in stage['modulators'].get("negative", []):
+                print("Correct!")
+                score += 1
+            else:
+                print(f"Incorrect. Negative modulators include: {', '.join(stage['modulators'].get('negative', [])) or 'None'}")
+
+    print("\n" + "="*50)
+    print(f"Quiz Complete! Your score is: {score}/{len(krebs_stages) * 3}")
+    print("Great job!" if score > (len(krebs_stages) * 1.5) else "Keep studying!")
+
+# Run the quiz
+if __name__ == "__main__":
+    krebs_cycle_quiz()
